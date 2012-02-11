@@ -31,7 +31,7 @@ import threaded
 import time
 
 
-# Replace with threaded.daemon and run again. Notice any change?
+# Replace with threaded.daemon and run again. Notice any changes?
 @threaded.inherit
 def print_odd_numbers(limit, interval):
     number = 1
