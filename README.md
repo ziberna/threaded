@@ -1,8 +1,9 @@
 @threaded
 =========
 
-__@threaded__ is a collection of Python decorator for easy threading. They come
-in handy when you have a function that you want to run in a separate thread.
+__@threaded__ is a collection of Python decorators for easy threading. They come
+in handy when you have a function that you want to run in a separate thread, but
+you don't want to (or don't need to) deal with threading objects. 
 
 Decorators
 ----------
