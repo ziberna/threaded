@@ -1,10 +1,11 @@
 @threaded
 =========
 
-__@threaded__ is a Python decorator for easy threading. It comes in handy when
-you have a function that you want to run in a separate thread.
+__@threaded__ is a collection of Python decorator for easy threading. They come
+in handy when you have a function that you want to run in a separate thread.
 
-There are four decorators, actually...
+Decorators
+----------
 
 ### threaded.inherit
 
@@ -21,6 +22,16 @@ The resulting thread is a non-daemon thread.
 ### threaded.opposite
 
 The thread's daemon property is opposite than that of the current thread.
+
+
+Special keyword arguments
+-------------------------
+
+### _delay
+
+Delays function call for a float number of seconds. Pass to the function call as
+`_delay=seconds` where seconds is a floating point number. This must be combined
+with one of the decorators above to work.
 
 
 Example
@@ -48,6 +59,6 @@ def print_even_numbers(limit, interval):
         time.sleep(interval)
 
 print('MAIN\t', '2ND THREAD')
-print_odd_numbers(30, 0.5)  # will be run in 2ND thread
 print_even_numbers(30, 0.25)  # will be run in MAIN thread
+print_odd_numbers(30, 0.5, _delay=1.5)  # will be run in 2ND thread
 ```
