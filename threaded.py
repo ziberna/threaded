@@ -17,6 +17,7 @@
 #=============================================================================
 
 import threading
+import time
 
 
 def threaded(function, daemon):
@@ -25,11 +26,30 @@ def threaded(function, daemon):
     """
     name = '%s-%d' % (function.__name__, threading.active_count())
     def function_wrapper(*args, **kwargs):
-        thread = threading.Thread(target=function, name=name, args=args, kwargs=kwargs)
+        if '_delay' in kwargs:
+            func = delayer(function, kwargs['_delay'])
+            del kwargs['_delay']
+        else:
+            func = function
+        thread = threading.Thread(target=func, name=name, args=args, kwargs=kwargs)
         thread.daemon = daemon
         thread.start()
+        
     function_wrapper.__name__ = function.__name__
     return function_wrapper
+
+def delayer(function, seconds):
+    """
+    Makes the actual call to the function delayed by given float number of
+    seconds. Returns a wrapped function.
+    """
+    def delay_wrapper(*args, **kwargs):
+        time.sleep(seconds)
+        function(*args, **kwargs)
+    
+    delay_wrapper.__name__ = function.__name__
+    return delay_wrapper
+
 
 def inherit(function):
     """
@@ -60,3 +80,4 @@ def opposite(function):
     """
     daemon = not threading.current_thread().daemon
     return threaded(function, daemon)
+
